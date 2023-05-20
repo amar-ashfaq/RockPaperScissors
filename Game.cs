@@ -6,7 +6,8 @@ namespace RockPaperScissors
 {
     public class Game
     {
-        private static readonly Random random = new Random();
+
+        // Dictionary to track the frequency of legal moves
         private readonly Dictionary<string, int> legalMoves = new Dictionary<string, int>
         {
             ["rock"] = 0,
@@ -20,6 +21,18 @@ namespace RockPaperScissors
         private int turnsTakenToWin = 0;
         private readonly string nl = Environment.NewLine;
 
+        private readonly Player player;
+        private readonly Computer computer;
+
+        public Game()
+        {
+            player = new Player();
+            computer = new Computer();
+        }
+
+        /// <summary>
+        /// Starts the Rock, Paper, Scissors game.
+        /// </summary>
         public void Start()
         {
             Console.WriteLine("Welcome to Rock, Paper, Scissors!" + nl);
@@ -28,9 +41,7 @@ namespace RockPaperScissors
             {
                 round++;
                 Console.WriteLine("Round #" + round);
-                Console.WriteLine("Enter your move (Rock, Paper, or Scissors) or 'Q' to quit:");
-                string playerMove = Console.ReadLine().Trim().ToLower();
-                Console.WriteLine();
+                string playerMove = player.GetMove();
 
                 if (playerMove == "q")
                 {
@@ -48,7 +59,8 @@ namespace RockPaperScissors
                     Console.WriteLine("Player played " + playerMove);
                 }
 
-                string computerMove = ComputersMove();
+                string computerMove = computer.GetMove();
+                RecordMoveFrequency(computerMove);
                 Console.WriteLine("Computer played " + computerMove);
 
                 string result = GetResult(playerMove, computerMove);
@@ -59,9 +71,14 @@ namespace RockPaperScissors
             }
 
             EndGameResult();
-            Console.WriteLine($"Thank you for playing!{nl}");
+            Console.WriteLine($"{nl}Thank you for playing!{nl}");
         }
 
+        /// <summary>
+        /// Checks if a move is valid.
+        /// </summary>
+        /// <param name="move">The move to check.</param>
+        /// <returns>True if the move is valid, false otherwise.</returns>
         private bool IsValidMove(string move)
         {
             if (legalMoves.ContainsKey(move))
@@ -73,19 +90,21 @@ namespace RockPaperScissors
             return false;
         }
 
+        /// <summary>
+        /// Records the frequency of a move.
+        /// </summary>
+        /// <param name="move">The move to record.</param>
         private void RecordMoveFrequency(string move)
         {
             legalMoves[move] += 1;
         }
 
-        private string ComputersMove()
-        {
-            string[] moves = { "rock", "paper", "scissors" };
-            int index = random.Next(moves.Length);
-            RecordMoveFrequency(moves[index]);
-            return moves[index];
-        }
-
+        /// <summary>
+        /// Determines the result of a round.
+        /// </summary>
+        /// <param name="playerMove">The player's move.</param>
+        /// <param name="computerMove">The computer's move.</param>
+        /// <returns>The result of the round.</returns>
         private string GetResult(string playerMove, string computerMove)
         {
             turnsTakenToWin++;
@@ -102,6 +121,10 @@ namespace RockPaperScissors
             return playerWins ? "You win this round!" : "Computer wins this round!";
         }
 
+        /// <summary>
+        /// Updates the points and prints the number of turns taken to win.
+        /// </summary>
+        /// <param name="playerWins">Indicates if the player wins the round.</param>
         private void UpdatePointsAndPrintTurnsTaken(bool playerWins)
         {
             if (playerWins)
@@ -116,12 +139,19 @@ namespace RockPaperScissors
             PrintTurnsTakenToWin();
         }
 
+        /// <summary>
+        /// Prints the number of turns taken to win and resets the counter.
+        /// </summary>
         private void PrintTurnsTakenToWin()
         {
             Console.WriteLine($"Turns taken to win: {turnsTakenToWin}");
             turnsTakenToWin = 0;
         }
 
+        /// <summary>
+        /// Determines the overall winner of the game.
+        /// </summary>
+        /// <returns>The overall winner of the game.</returns>
         private string DetermineWinner()
         {
             if (round == 1)
@@ -135,6 +165,10 @@ namespace RockPaperScissors
             return "No winner. It's a tie!";
         }
 
+        /// <summary>
+        /// Determines the most frequent move played across all rounds.
+        /// </summary>
+        /// <returns>The most frequent move played.</returns>
         private string DetermineMostFrequentMove()
         {
             if (round == 1)
@@ -144,6 +178,9 @@ namespace RockPaperScissors
             return mostFrequentMove;
         }
 
+        /// <summary>
+        /// Prints the end game results.
+        /// </summary>
         private void EndGameResult()
         {
             string endResult = $"-----END RESULTS-----{nl}" +

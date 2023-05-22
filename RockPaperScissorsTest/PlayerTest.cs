@@ -29,11 +29,11 @@ namespace RockPaperScissorsTest
         [TestMethod]
         public void Player_GetMove_PlayerInputsRock_RockReturned()
         {
-            // Arrange
+            // Assemble
             var input = new StringReader("Rock");
             Console.SetIn(input);
 
-            // Act
+            // Action
             string move = player.GetMove();
 
             // Assert
@@ -43,11 +43,11 @@ namespace RockPaperScissorsTest
         [TestMethod]
         public void Player_GetMove_PlayerInputsPaper_PaperReturned()
         {
-            // Arrange
+            // Assemble
             var input = new StringReader("paPer");
             Console.SetIn(input);
 
-            // Act
+            // Action
             string move = player.GetMove();
 
             // Assert
@@ -57,11 +57,11 @@ namespace RockPaperScissorsTest
         [TestMethod]
         public void Player_GetMove_PlayerInputsScissors_ScissorsReturned()
         {
-            // Arrange
+            // Assemble
             var input = new StringReader("scIssOrs ");
             Console.SetIn(input);
 
-            // Act
+            // Action
             string move = player.GetMove();
 
             // Assert
@@ -71,11 +71,11 @@ namespace RockPaperScissorsTest
         [TestMethod]
         public void Player_GetMove_PlayerInputsQ_QuitCommandReturned()
         {
-            // Arrange
+            // Assemble
             var input = new StringReader("Q");
             Console.SetIn(input);
 
-            // Act
+            // Action
             string move = player.GetMove();
 
             // Assert

@@ -21,7 +21,7 @@ namespace RockPaperScissorsTest
         [TestMethod]
         public void Computer_GetMove_ReturnsValidMove()
         {
-            // Act
+            // Action
             string move = computer.GetMove();
 
             // Assert
@@ -32,12 +32,12 @@ namespace RockPaperScissorsTest
         [TestMethod]
         public void Computer_GetMove_ReturnsRandomMoves()
         {
-            // Arrange
+            // Assemble
             string[] moves = { "rock", "paper", "scissors" };
             int rockCount = 0, paperCount = 0, scissorsCount = 0;
             const int iterations = 10000;
 
-            // Act
+            // Action
             for (int i = 0; i < iterations; i++)
             {
                 string move = computer.GetMove();

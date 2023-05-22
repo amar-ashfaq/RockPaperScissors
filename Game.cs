@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("RockPaperScissorsTest")]
 namespace RockPaperScissors
 {
     public class Game
     {
-
         // Dictionary to track the frequency of legal moves
-        private readonly Dictionary<string, int> legalMoves = new Dictionary<string, int>
+        internal Dictionary<string, int> legalMoves = new Dictionary<string, int>
         {
             ["rock"] = 0,
             ["paper"] = 0,
             ["scissors"] = 0
         };
 
-        private int round = 0;
-        private int playerPoints = 0;
-        private int computerPoints = 0;
         private int turnsTakenToWin = 0;
+        internal int round = 0;       
+        internal int playerPoints = 0;
+        internal int computerPoints = 0;
+        
         private readonly string nl = Environment.NewLine;
 
         private readonly Player player;
@@ -33,7 +35,7 @@ namespace RockPaperScissors
         /// <summary>
         /// Starts the Rock, Paper, Scissors game.
         /// </summary>
-        public void Start()
+        internal void Start()
         {
             Console.WriteLine("Welcome to Rock, Paper, Scissors!" + nl);
 
@@ -79,7 +81,7 @@ namespace RockPaperScissors
         /// </summary>
         /// <param name="move">The move to check.</param>
         /// <returns>True if the move is valid, false otherwise.</returns>
-        private bool IsValidMove(string move)
+        internal bool IsValidMove(string move)
         {
             if (legalMoves.ContainsKey(move))
             {
@@ -94,7 +96,7 @@ namespace RockPaperScissors
         /// Records the frequency of a move.
         /// </summary>
         /// <param name="move">The move to record.</param>
-        private void RecordMoveFrequency(string move)
+        internal void RecordMoveFrequency(string move)
         {
             legalMoves[move] += 1;
         }
@@ -105,7 +107,7 @@ namespace RockPaperScissors
         /// <param name="playerMove">The player's move.</param>
         /// <param name="computerMove">The computer's move.</param>
         /// <returns>The result of the round.</returns>
-        private string GetResult(string playerMove, string computerMove)
+        internal string GetResult(string playerMove, string computerMove)
         {
             turnsTakenToWin++;
 
@@ -152,7 +154,7 @@ namespace RockPaperScissors
         /// Determines the overall winner of the game.
         /// </summary>
         /// <returns>The overall winner of the game.</returns>
-        private string DetermineWinner()
+        internal string DetermineWinner()
         {
             if (round == 1)
                 return "No rounds were played";
@@ -172,7 +174,7 @@ namespace RockPaperScissors
         private string DetermineMostFrequentMove()
         {
             if (round == 1)
-                return "-";
+                return "No moves were played";
 
             string mostFrequentMove = legalMoves.OrderByDescending(m => m.Value).First().Key;
             return mostFrequentMove;
@@ -181,7 +183,7 @@ namespace RockPaperScissors
         /// <summary>
         /// Prints the end game results.
         /// </summary>
-        private void EndGameResult()
+        internal void EndGameResult()
         {
             string endResult = $"-----END RESULTS-----{nl}" +
                                $"Total rounds played: {round - 1}{nl}" +
